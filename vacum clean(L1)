@@ -1,0 +1,48 @@
+#vacuum cleaner
+goal_state={"A":"0","B":"0"}
+action=0
+cost=0
+room_state={"A":"0","B":"0"}
+location=input("enter the location of vacuum cleaner(either A or B):")
+for room in room_state:
+    action=input("enter the state of "+room+"(0 or 1)")
+    room_state[room]=action
+print("Goal state is:",goal_state)
+print("Room state is:",room_state)
+if(room_state!=goal_state):
+    if(location=="A"):
+        if(room_state["A"]=="1"):
+            room_state["A"]="0"
+            cost+=1
+            print("room A was dirty\nroom A is cleaned\ncost for cleaning room A is 1")
+        if(room_state==goal_state):
+            print("Goal is reached")
+            print("mainainance cost is:",cost)
+        else:
+            print("room A is clean\nmoving from A to room B\ncost for moving from A to B is 1")
+            cost+=1
+        if(room_state["B"]=="1"):
+            room_state["B"]="0"
+            cost+=1
+            print("room B was dirty\nroom B is cleaned\ncost for cleaning room B is 1")
+        if(room_state==goal_state):
+            print("Goal is reached")
+            print("mainainance cost is:",cost)
+    else:
+        if(room_state["B"]=="1"):
+            room_state["B"]="0"
+            cost+=1
+            print("room B was dirty\nroom B is cleaned\ncost for cleaning room B is 1")
+        if(room_state==goal_state):
+            print("Goal is reached")
+            print("mainainance cost is:",cost)
+        else:
+            print("room B is clean\nmoving from room A to room B\ncost for moving from A to B is 1")
+            cost+=1
+        if(room_state["A"]=="1"):
+            room_state["A"]="0"
+            cost+=1
+            print("room A was dirty\nroom A is cleaned\ncost for cleaning room A is 1")
+        if(room_state==goal_state):
+            print("Goal is reached")
+            print("mainainance cost is:",cost)
