@@ -1,0 +1,71 @@
+Conversation opened. 1 read message.
+
+Skip to content
+Using BMS College of Engineering Mail with screen readers
+8 of 1,705
+Fwd: Please do not
+Inbox
+
+Vedanth C R
+3:36 PM (1 hour ago)
+to Thejas, Thanish, me, U, Vinay
+
+
+
+---------- Forwarded message ---------
+From: Varsha M Gowda <varsham.cs23@bmsce.ac.in>
+Date: Tue, Sep 16, 2025 at 3:27 PM
+Subject: Fwd: Please do not
+To: Vedanth C R <vedanthcr.cs23@bmsce.ac.in>
+
+
+
+
+---------- Forwarded message ---------
+From: Vaibhav S Keerthi <vaibhavs.cs23@bmsce.ac.in>
+Date: Tue, Sep 16, 2025 at 3:26 PM
+Subject: Fwd: Please do not
+To: Varsha M Gowda <varsham.cs23@bmsce.ac.in>, Varsha A Y <varshaay.cs23@bmsce.ac.in>
+
+
+
+
+---------- Forwarded message ---------
+From: Zain Mahedi <zainmahedi.cs23@bmsce.ac.in>
+Date: Tue, Sep 16, 2025 at 3:26 PM
+Subject: Please do not
+To: Vikas Shashi <vikasshashi.cs23@bmsce.ac.in>
+
+
+function A*(start, goal):
+    open_list ← priority queue ordered by f(n) = g(n) + h(n)
+    closed_list ← empty set
+
+    g(start) ← 0
+    f(start) ← g(start) + h(start)
+    open_list.insert(start, f(start))
+
+    while open_list is not empty:
+        current ← node in open_list with lowest f value
+        if current = goal:
+            return path from start to goal
+
+        remove current from open_list
+        add current to closed_list
+
+        for each neighbor of current:
+            if neighbor in closed_list:
+                continue
+
+            tentative_g ← g(current) + cost(current, neighbor)
+
+            if neighbor not in open_list or tentative_g < g(neighbor):
+                g(neighbor) ← tentative_g
+                f(neighbor) ← g(neighbor) + h(neighbor)
+                parent(neighbor) ← current
+
+                if neighbor not in open_list:
+                    open_list.insert(neighbor, f(neighbor))
+
+    return failure
+
