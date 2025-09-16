@@ -1,0 +1,89 @@
+#tic-tac-toe
+
+def display_board(board):
+    print(f"{board[0]}|{board[1]}|{board[2]}")
+    print("-------")
+    print(f"{board[3]}|{board[4]}|{board[5]}")
+    print("-------")
+    print(f"{board[6]}|{board[7]}|{board[8]}")
+
+def player(board):
+  while True:
+      try:
+          move = int(input("\nenter move(0 to 8) for P1:\t"))
+          if 0 <= move <= 8 and board[move] == " ":
+              board[move] = "X"
+              break
+          else:
+              print("invalid move")
+              break
+      except ValueError:
+          print("Invalid input. Please enter a number between 0 and 8.")
+          break
+
+
+def computer(board):
+    while True:
+        try:
+            move = int(input("\nenter move(0 to 8) for P2:\t"))
+            if 0 <= move <= 8 and board[move] == " ":
+                board[move] = "O"
+                break
+            else:
+                print("invalid move")
+                break
+        except ValueError:
+            print("Invalid input. Please enter a number between 0 and 8.")
+            break
+
+
+def check_win(board, sign):
+  win_combo = [(0, 1, 2), (3, 4, 5), (6, 7, 8), (0, 3, 6), (1, 4, 7), (2, 5, 8), (0, 4, 8), (2, 4, 6)]
+  for i in win_combo:
+    if board[i[0]] == board[i[1]] == board[i[2]] == sign:
+      return True
+  return False
+
+def check_tie(board):
+    for i in range(9):
+        if board[i] == " ":
+            return False
+    return True
+
+board = [" "] * 9
+
+while True:
+    print("Tic Tac Toe")
+    while True:
+        display_board(board)
+        player(board)
+        if check_win(board, "X"):
+            print("          ")
+            display_board(board)
+            print("player won")
+            break
+        if check_tie(board):
+            print("          ")
+            display_board(board)
+            print("It's a tie")
+            break
+
+        display_board(board)
+
+        computer(board)
+        if check_win(board, "O"):
+            print("          ")
+            display_board(board)
+            print("computer won")
+            break
+        if check_tie(board):
+            print("          ")
+            display_board(board)
+            print("It's a tie")
+            break
+
+    ans=input("\n\nsay yes for new round\t")
+    if ans=="yes":
+        board = [" "] * 9
+    else:
+        break
