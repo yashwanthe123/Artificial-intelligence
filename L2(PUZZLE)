@@ -1,0 +1,70 @@
+import copy
+
+def get_puzzle(name):
+    print(f"\nEnter the {name} puzzle (3x3, use -1 for blank):")
+    puzzle = []
+    for i in range(3):
+        row = list(map(int, input(f"Row {i+1} (space-separated 3 numbers): ").split()))
+        puzzle.append(row)
+    return puzzle
+
+def move(temp, movement):
+    for i in range(3):
+        for j in range(3):
+            if temp[i][j] == -1:
+                if movement == "up" and i > 0:
+                    temp[i][j], temp[i-1][j] = temp[i-1][j], temp[i][j]
+                elif movement == "down" and i < 2:
+                    temp[i][j], temp[i+1][j] = temp[i+1][j], temp[i][j]
+                elif movement == "left" and j > 0:
+                    temp[i][j], temp[i][j-1] = temp[i][j-1], temp[i][j]
+                elif movement == "right" and j < 2:
+                    temp[i][j], temp[i][j+1] = temp[i][j+1], temp[i][j]
+                return temp
+    return temp
+
+def is_goal(state, goal):
+    return state == goal
+
+def puzzle_to_tuple(puzzle):
+    return tuple(tuple(row) for row in puzzle)
+
+def dfs(start, goal, max_depth=50):
+    stack = [(start, [], [], 0)]  
+    visited = set()
+
+    while stack:
+        current, path, moves, depth = stack.pop()
+        if puzzle_to_tuple(current) in visited:
+            continue
+
+        visited.add(puzzle_to_tuple(current))
+
+        if is_goal(current, goal):
+            print("\nSolution found!")
+            for step in path + [current]:
+                for row in step:
+                    print(row)
+                print()
+            print("Moves:", moves)
+            print("Path cost =", len(moves))
+            return
+
+        if depth >= max_depth:
+            continue
+
+        for move_dir, opposite in [("up","down"), ("left","right"), ("down","up"), ("right","left")]:
+            if moves and move_dir == {"up":"down", "down":"up", "left":"right", "right":"left"}[moves[-1]]:
+                continue  
+
+            new_state = move(copy.deepcopy(current), move_dir)
+            if new_state != current:
+                stack.append((new_state, path + [current], moves + [move_dir], depth + 1))
+
+    print("No solution found within depth limit.")
+
+start_puzzle = get_puzzle("start")
+goal_puzzle = get_puzzle("goal")
+
+print("\n~~~~~~~~~~~~ DFS ~~~~~~~~~~~~")
+dfs(start_puzzle, goal_puzzle)
