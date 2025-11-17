@@ -1,0 +1,62 @@
+#AI-LAB6
+
+tree = {
+    'A': 10, 'B': 11, 'C': 9,  'D': 12,
+    'E': 14, 'F': 15, 'G': 13, 'H': 14,
+    'I': 5,  'J': 2,  'K': 4,  'L': 1,
+    'M': 3,  'N': 22, 'O': 20, 'P': 21
+}
+
+tree_structure = [
+    ['A', 'B', 'C', 'D'], 
+    ['E', 'F', 'G', 'H'], 
+    ['I', 'J', 'K', 'L'],  
+    ['M', 'N', 'O', 'P']   
+]
+
+pruned_nodes = []
+
+def alpha_beta_min(values, alpha, beta):
+    """MIN level"""
+    min_val = float('inf')
+    for name in values:
+        val = tree[name]
+        print(f"    MIN checks {name}={val}, α={alpha}, β={beta}")
+        if val < min_val:
+            min_val = val
+        if min_val <= alpha:
+            # prune remaining nodes
+            pruned_nodes.extend(values[values.index(name)+1:])
+            print(f"Pruning at MIN node after {name}: {values[values.index(name)+1:]}")
+            break
+        beta = min(beta, min_val)
+    print(f"    → MIN returns {min_val}")
+    return min_val
+
+def alpha_beta_max(structure, alpha, beta):
+    """MAX level"""
+    max_val = float('-inf')
+    best_branch = None
+    for group in structure:
+        print(f"\nExploring branch: {group}")
+        val = alpha_beta_min(group, alpha, beta)
+        if val > max_val:
+            max_val = val
+            best_branch = group
+        if max_val >= beta:
+            remaining = structure[structure.index(group)+1:]
+            for g in remaining:
+                pruned_nodes.extend(g)
+            print(f"Pruning at MAX after {group}")
+            break
+        alpha = max(alpha, max_val)
+        print(f"MAX updated α={alpha}, β={beta}")
+    print(f"\n→ MAX returns {max_val}")
+    return max_val, best_branch
+
+root_value, path = alpha_beta_max(tree_structure, float('-inf'), float('inf'))
+
+print("\n===========================")
+print("Root Node Value (MAX):", root_value)
+print("Best Path (Branch):", path)
+print("Pruned Nodes:", pruned_nodes)
